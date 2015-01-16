@@ -7,7 +7,7 @@
 
 CFLAGS = `pkg-config --cflags --libs opencv`  -std=c++11
 
-MYLIBS = utils.o Contour.o InclusionTester.o ShapeMatcher.o
+MYLIBS = utils.o HsvRange.o Contour.o InclusionTester.o ShapeMatcher.o
 MYPROGS = vidcap edge-detect-contour-explorer tape-detector tape-detector-live polygon-explorer-yellow yellow-tote-detector
 
 ## Set Debug ##
@@ -27,7 +27,10 @@ clean:
 utils.o: utils.cpp
 	g++ -c $<  $(CFLAGS)
 
-Contour.o: Contour.cpp Contour.h utils.o
+HsvRange.o: HsvRange.cpp
+	g++ -c $<  $(CFLAGS)
+	
+Contour.o: Contour.cpp Contour.h utils.o HsvRange.o
 	g++ -c $< $(CFLAGS)
 
 InclusionTester.o: InclusionTester.cpp InclusionTester.h utils.o Contour.o

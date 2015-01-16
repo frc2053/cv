@@ -4,6 +4,8 @@
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
 
+#include "HsvRange.h"
+
 using namespace cv;
 
 extern RNG rng;
@@ -12,7 +14,11 @@ extern RNG rng;
 
 extern Scalar GREEN;
 extern Scalar RED;
+extern Scalar BLUE;
+
+extern HsvRange HSV_YELLOW;
 
 void drawRectangle(Mat *img, Rect *rect, Scalar *color);
+void drawPoint(Mat *img, Point *p, Scalar *color);
 
 #endif

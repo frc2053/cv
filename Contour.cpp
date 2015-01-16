@@ -168,9 +168,13 @@ vector<Contour> detectContours_YellowFilter(Mat *img, int minPoints, int minLeng
     Mat hsvImg, maskImg; 
     
     cvtColor(*img, hsvImg, CV_BGR2HSV);
-    Scalar hsvMin = Scalar(20, 100, 100);
-    Scalar hsvMax = Scalar(30, 255, 255);
-    inRange(hsvImg, hsvMin, hsvMax, maskImg);
+    
+    
+    //Scalar hsvMin = Scalar(20, 100, 100);
+    //Scalar hsvMax = Scalar(30, 255, 255);
+    //HsvRange yellow(hsvMin, hsvMax);
+    
+    inRange(hsvImg, HSV_YELLOW.hsvMin, HSV_YELLOW.hsvMax, maskImg);
     findContours(maskImg, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
     
     for(int i=0; i < contours.size(); i++) {

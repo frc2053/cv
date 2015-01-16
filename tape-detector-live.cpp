@@ -50,16 +50,14 @@ int main( int argc, char** argv )
             cout << "Distance is " << dist << endl;
             
             // Estimate dist from center
-            float pixPer7Inches = matchingBoundRect.width; // pixels in 7 inches
             float toteCenterX = matchingBoundRect.x + matchingBoundRect.width/2;
             float frameCenter = frame.rows/2;
-            
             float toteDeltaPix = frameCenter - toteCenterX;
-            cout << "toteDeltaPix " << toteDeltaPix << endl;
+            
+            float pixPer7Inches = matchingBoundRect.width; // pixels in 7 inches
+            float toteDeltaInches = (toteDeltaPix * pixPer7Inches) / 7;
+            cout << "toteDeltaPix " << toteDeltaPix << "   toteDeltaInches = " << toteDeltaInches << endl;
         }
-        
-        
-        
         
         imshow("Src", frame);
         imshow("Masked", maskImg);
