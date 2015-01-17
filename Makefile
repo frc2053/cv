@@ -3,12 +3,12 @@
 #
 #
 
-#DEBUG = 1       # Comment out to compile optimized without debug symbols
+DEBUG = 1       # Comment out to compile optimized without debug symbols
 
 CFLAGS = `pkg-config --cflags --libs opencv`  -std=c++11
 
 MYLIBS = utils.o HsvRange.o Contour.o InclusionTester.o ShapeMatcher.o
-MYPROGS = vidcap edge-detect-contour-explorer tape-detector tape-detector-live polygon-explorer-yellow yellow-tote-detector
+MYPROGS = vidcap edge-detect-contour-explorer tape-detector tape-detector-live polygon-explorer-yellow yellow-tote-detector yellow-tote-detector-live
 
 ## Set Debug ##
 ifdef DEBUG
@@ -56,6 +56,8 @@ tape-detector-live: tape-detector-live.cpp $(MYLIBS)
 yellow-tote-detector: yellow-tote-detector.cpp $(MYLIBS)
 	g++ $< $(MYLIBS) -o $@ $(CFLAGS)
 
+yellow-tote-detector-live: yellow-tote-detector-live.cpp $(MYLIBS)
+	g++ $< $(MYLIBS) -o $@ $(CFLAGS)
 
 polygon-explorer-yellow: polygon-explorer-yellow.cpp $(MYLIBS)
 	g++ $< -o $@ $(MYLIBS) $(CFLAGS)
