@@ -17,8 +17,8 @@ int main( int argc, char** argv )
     drawing = Mat::zeros(src.size(), CV_8UC3);
     bool isMatch, isMatch2;
     vector<Contour> contours = detectContours_YellowFilter(&src, 6, 50);
-    BackwardsLMatcher blm(&src);
-    LMatcher lm(&src);
+    BackwardsLMatcher blm(NULL);
+    LMatcher lm(NULL);
     
     drawContourList(&contours, &drawing);
     
@@ -27,8 +27,8 @@ int main( int argc, char** argv )
     
     Contour matchingContour, matchingContour2;
     Rect matchingBoundRect, matchingBoundRect2;
-    isMatch = blm.findMatch(&contours, &matchingContour, &matchingBoundRect);
-    isMatch2 = lm.findMatch(&contours, &matchingContour2, &matchingBoundRect2);
+    isMatch = blm.findMatch(&contours, &src, &matchingContour, &matchingBoundRect);
+    isMatch2 = lm.findMatch(&contours, &src, &matchingContour2, &matchingBoundRect2);
     
     if (isMatch && isMatch2) {
         float dist = 4740.0 / matchingBoundRect.width;

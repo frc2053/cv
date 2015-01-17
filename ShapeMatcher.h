@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Contour.h"
+#include "HsvRange.h"
 
 using namespace std;
 using namespace cv;
@@ -14,40 +15,42 @@ using namespace cv;
 class ShapeMatcher
 {
 private:
-    virtual bool isMatch(Contour *contour) { return false; }
+    HsvRange *matchColor;
+    
+    virtual bool isMatch(Contour *contour, Mat *img) { return false; }
     
 public:
-    Mat* img;
+    bool debugDraw;
     
-    ShapeMatcher(Mat *img);
-    void setImg(Mat* img);
-    bool findMatch(vector<Contour> *contours, Contour *matchingContour, Rect *boundingRect);
+    ShapeMatcher();
+    ShapeMatcher(HsvRange* matchColor);
+    bool findMatch(vector<Contour> *contours, Mat *img, Contour *matchingContour, Rect *boundingRect);
 };
 
 /***** BackwardsLMatcher *****/
 class BackwardsLMatcher: public ShapeMatcher
 {
 private:
-    bool isMatch(Contour *contour);
+    bool isMatch(Contour *contour, Mat *img);
 public:
-    BackwardsLMatcher(Mat* img) : ShapeMatcher(img) {}
+    BackwardsLMatcher(HsvRange* matchColor) : ShapeMatcher(matchColor) {}
 };
 
 /***** LMatcher *****/
 class LMatcher: public ShapeMatcher
 {
 private:
-    bool isMatch(Contour *contour);
+    bool isMatch(Contour *contour, Mat *img);
 public:
-    LMatcher(Mat* img) : ShapeMatcher(img) {}
+    LMatcher(HsvRange* matchColor) : ShapeMatcher(matchColor) {}
 };
 
 /***** YellowToteMatcher *****/
 class YellowToteMatcher: public ShapeMatcher
 {
 private:
-    bool isMatch(Contour *contour);
+    bool isMatch(Contour *contour, Mat *img);
 public:
-    YellowToteMatcher(Mat* img) : ShapeMatcher(img) {}
+    YellowToteMatcher(HsvRange* matchColor) : ShapeMatcher(matchColor) {}
 };
 

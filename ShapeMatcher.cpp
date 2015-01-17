@@ -5,31 +5,27 @@
 using namespace cv;
 using namespace std;
 
-ShapeMatcher::ShapeMatcher(Mat *img)
+ShapeMatcher::ShapeMatcher(HsvRange* matchColor)
 {
-    this->img = img;
+    this->matchColor = matchColor;
+    this->debugDraw = false;
 }
 
-void ShapeMatcher::setImg(Mat* img)
-{
-    this->img = img;
-}
-
-bool ShapeMatcher::findMatch(vector<Contour> *contours, Contour *matchingContour, Rect *matchingBoundRect)
+bool ShapeMatcher::findMatch(vector<Contour> *contours, Mat *img, Contour *matchingContour, Rect *matchingBoundRect)
 {
     for(int i=0; i < contours->size(); i++) {
         Contour *contour = &((*contours)[i]);
         Rect rect = boundingRect(Mat(*contour));
         
         // Is this shape an L shape?
-        bool isL = isMatch(contour);
+        bool isL = isMatch(contour, img);
         if (!isL) continue;
         cout << "***** Found L :)" << endl;
         
         // If this is the L shape we're looking for, draw green rectangle (and shape end-points) on source image!
-        if (this->img) {
-            drawRectangle(this->img, &rect, &GREEN);
-            contourDrawPoints(contour, this->img);
+        if (this->debugDraw) {
+            drawRectangle(img, &rect, &GREEN);
+            contourDrawPoints(contour, img);
         }
         
         *matchingContour = *contour;
@@ -43,7 +39,7 @@ bool ShapeMatcher::findMatch(vector<Contour> *contours, Contour *matchingContour
 
 /***** BackwardsLMatcher *****/
 
-bool BackwardsLMatcher::isMatch(Contour *contour)
+bool BackwardsLMatcher::isMatch(Contour *contour, Mat *img)
 {   
     vector<bool> expectedAnswers { false, false, true,
                                    false, false, true,
@@ -51,12 +47,12 @@ bool BackwardsLMatcher::isMatch(Contour *contour)
                                    };
     
     InclusionTester it(3, expectedAnswers);
-    return it.test(contour, this->img);
+    return it.test(contour, img);
 }
 
 /***** LMatcher *****/
 
-bool LMatcher::isMatch(Contour *contour)
+bool LMatcher::isMatch(Contour *contour, Mat *img)
 {   
     vector<bool> expectedAnswers { true, false, false,
                                    true, false, false,
@@ -64,13 +60,13 @@ bool LMatcher::isMatch(Contour *contour)
                                    };
     
     InclusionTester it(3, expectedAnswers);
-    return it.test(contour, this->img);
+    return it.test(contour, img);
 }
 
 /***** YellowToteMatcher *****/
 
 
-bool YellowToteMatcher::isMatch(Contour *contour)
+bool YellowToteMatcher::isMatch(Contour *contour, Mat *img)
 {   
     // Can't use inclusion tester here because the tote has angles, it is not square.
     // We probably want to look at the angles at the edgles

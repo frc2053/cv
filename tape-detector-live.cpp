@@ -30,11 +30,8 @@ int main( int argc, char** argv )
         Contour matchingContour;
         Rect matchingBoundRect;
         
-        blm.setImg(&frame);
-        lm.setImg(&frame);
-        
-        blm.findMatch(&contours, &matchingContour, &matchingBoundRect);
-        isMatch = lm.findMatch(&contours, &matchingContour, &matchingBoundRect);
+        blm.findMatch(&contours, &frame, &matchingContour, &matchingBoundRect);
+        isMatch = lm.findMatch(&contours, &frame, &matchingContour, &matchingBoundRect);
         
         // Mask all except yellow :)
         Mat hsvImg, maskImg, masked;

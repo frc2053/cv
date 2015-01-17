@@ -1,3 +1,6 @@
+#ifndef __HSV_RANGE__
+#define __HSV_RANGE__
+
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
 
@@ -11,3 +14,4 @@ class HsvRange
         HsvRange(Scalar hsvMin, Scalar hsvMax);
 };
 
+#endif
