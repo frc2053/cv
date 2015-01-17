@@ -74,7 +74,7 @@ bool YellowToteMatcher::isMatch(Contour *contour, Mat *img)
     // Aspect ratio check
     Rect rect = boundingRect(Mat(*contour));
     float whRatio = (float)rect.width / rect.height;
-    float whRatioMin =  1.4;
+    float whRatioMin =  1.2;
     float whRatioMax =  2.2;
     
     if (whRatio < whRatioMin ||  whRatio > whRatioMax) {
