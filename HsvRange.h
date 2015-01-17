@@ -11,7 +11,9 @@ class HsvRange
     public:
         Scalar hsvMin;
         Scalar hsvMax;
+        
         HsvRange(Scalar hsvMin, Scalar hsvMax);
+        bool testPixel(Mat *hsvImg, int x, int y);
 };
 
 #endif

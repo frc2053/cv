@@ -15,7 +15,8 @@ int main( int argc, char** argv )
     Mat src, drawing;
     src = imread( argv[1], 1 );
     drawing = Mat::zeros(src.size(), CV_8UC3);
-       
+    bool isMatch;
+    
     vector<Contour> contours = detectContours_YellowFilter(&src, 6, 50);
     YellowToteMatcher ytm(&HSV_YELLOW);
     
@@ -23,14 +24,14 @@ int main( int argc, char** argv )
     
     for(int i=0; i < contours.size(); i++) {
         contourDrawPoints(&contours[i], &drawing);
-        Point centerPoint = contourCentoid(&contours[i]);
-        cv::line(src, centerPoint, centerPoint, GREEN, 5);
-        cv::line(drawing, centerPoint, centerPoint, GREEN, 5);
     }
     
     Contour matchingContour;
     Rect matchingBoundRect;
-    ytm.findMatch(&contours, &src, &matchingContour, &matchingBoundRect);
+    isMatch = ytm.findMatch(&contours, &src, &matchingContour, &matchingBoundRect);
+    
+    if (isMatch)
+        drawContour(&matchingContour, &src);
 
     /// Show in a window
     imshow( "Contours", drawing );

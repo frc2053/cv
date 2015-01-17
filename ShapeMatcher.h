@@ -14,7 +14,7 @@ using namespace cv;
 
 class ShapeMatcher
 {
-private:
+protected:
     HsvRange *matchColor;
     
     virtual bool isMatch(Contour *contour, Mat *img) { return false; }

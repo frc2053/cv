@@ -76,6 +76,16 @@ bool YellowToteMatcher::isMatch(Contour *contour, Mat *img)
     float whRatio = (float)rect.width / rect.height;
     float whRatioMin =  2.0 * 0.9;
     float whRatioMax =  2.0 * 1.1;
-    return (whRatio >= whRatioMin &&  whRatio <= whRatioMax);
+    if (whRatio < whRatioMin ||  whRatio > whRatioMax)
+        return false;
+    
+    // Color check - Ensure a portion of the tote is the desired match color
+    Mat hsvImg;
+    cvtColor(*img, hsvImg, CV_BGR2HSV);
+    
+    int testX = rect.x + rect.width/20;
+    int testY = rect.y + rect.width/20;
+    
+    return matchColor->testPixel(&hsvImg, testX, testY);    
 }
 
