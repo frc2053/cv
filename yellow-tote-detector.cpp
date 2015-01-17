@@ -2,9 +2,8 @@
 #include "opencv2/imgproc/imgproc.hpp"
 #include <iostream>
 
-#include "ShapeMatcher.h"
 #include "Contour.h"
-#include "utils.h"
+#include "YellowToteFinder.h"
 
 using namespace cv;
 using namespace std;
@@ -12,31 +11,16 @@ using namespace std;
 int main( int argc, char** argv )
 {   
     /// Load & prep src image
-    Mat src, drawing;
+    Mat src;
     src = imread( argv[1], 1 );
-    drawing = Mat::zeros(src.size(), CV_8UC3);
-    bool isMatch;
     
-    vector<Contour> contours = detectContours_YellowFilter(&src, 6, 50);
-    YellowToteMatcher ytm(&HSV_YELLOW);
-    
-    drawContourList(&contours, &drawing);
-    
-    for(int i=0; i < contours.size(); i++) {
-        contourDrawPoints(&contours[i], &drawing);
-    }
-    
-    Contour matchingContour;
-    Rect matchingBoundRect;
-    isMatch = ytm.findMatch(&contours, &src, &matchingContour, &matchingBoundRect);
+    YellowToteFinder ytf = YellowToteFinder();
+    bool isMatch = ytf.findTote(&src);
     
     if (isMatch)
-        drawContour(&matchingContour, &src);
+        drawContour(&ytf.matchingContour, &src);
 
-    /// Show in a window
-    imshow( "Contours", drawing );
-    imshow( "Src", src );
-    
+    imshow( "Src", src );    
     waitKey(0);
     return 0;
 }

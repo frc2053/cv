@@ -5,8 +5,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "ShapeMatcher.h"
-#include "utils.h"
+#include "YellowToteFinder.h"
 
 using namespace cv;
 using namespace std;
@@ -19,17 +18,12 @@ int main( int argc, char** argv )
         return -1;
 
     Mat frame;
-    YellowToteMatcher ytm(&HSV_YELLOW);
+    YellowToteFinder ytf = YellowToteFinder();
     bool isMatch;
     for(;;)
     {        
         cap >> frame; // get a new frame from camera
-            
-        vector<Contour> contours = detectContours_YellowFilter(&frame, 6, 50);
-        Contour matchingContour;
-        Rect matchingBoundRect;
-        
-        isMatch = ytm.findMatch(&contours, &frame, &matchingContour, &matchingBoundRect);
+        isMatch = ytf.findTote(&frame);
         
         // Mask all except yellow :)
         Mat hsvImg, maskImg, masked;
@@ -40,11 +34,11 @@ int main( int argc, char** argv )
         frame.copyTo(frame, maskImg);
         
         if(isMatch) {
-            drawContour(&matchingContour, &frame);
+            drawContour(&ytf.matchingContour, &frame);
         }        
         
-        imshow("Yellow Tote Detector Line - Src", frame);
         imshow("Masked", maskImg);
+        imshow("Yellow Tote Detector Line - Src", frame);
         if(waitKey(30) >= 0) break;
         //usleep(100000);
     }
