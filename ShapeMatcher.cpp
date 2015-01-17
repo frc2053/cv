@@ -20,7 +20,6 @@ bool ShapeMatcher::findMatch(vector<Contour> *contours, Mat *img, Contour *match
         // Is this shape an L shape?
         bool isL = isMatch(contour, img);
         if (!isL) continue;
-        cout << "***** Found L :)" << endl;
         
         // If this is the L shape we're looking for, draw green rectangle (and shape end-points) on source image!
         if (this->debugDraw) {
@@ -78,7 +77,7 @@ bool YellowToteMatcher::isMatch(Contour *contour, Mat *img)
     float whRatioMax =  2.2;
     
     if (whRatio < whRatioMin ||  whRatio > whRatioMax) {
-        cout << "Rejecting shape based on aspect-ratio: " << whRatio << endl;
+        //cout << "Rejecting shape based on aspect-ratio: " << whRatio << endl;
         return false;
     }
     
@@ -98,16 +97,15 @@ bool YellowToteMatcher::isMatch(Contour *contour, Mat *img)
     
     bool foundColorMatch = false;
     for(int i = 0; i < testPoints.size(); i++) {
-        drawPoint(img, &testPoints[i], &RED);
+        //drawPoint(img, &testPoints[i], &RED);
         if (matchColor->testPixel(&hsvImg, testPoints[i].x, testPoints[i].y)) {
-            cout << "!";
             foundColorMatch = true;
             break;
         }
     }
     
     if (!foundColorMatch) {
-        cout << "Rejecting shape based on color: " << "" << endl;
+        //cout << "Rejecting shape based on color: " << "" << endl;
         return false;
     }
     
