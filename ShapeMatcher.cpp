@@ -64,7 +64,6 @@ bool LMatcher::isMatch(Contour *contour, Mat *img)
 
 /***** YellowToteMatcher *****/
 
-
 bool YellowToteMatcher::isMatch(Contour *contour, Mat *img)
 {   
     // Can't use inclusion tester here because the tote has angles, it is not square.
@@ -95,20 +94,10 @@ bool YellowToteMatcher::isMatch(Contour *contour, Mat *img)
     testPoints.push_back( Point(rect.x + rect.width - rect.width/10, rect.y + rect.height - rect.height/10) );
     testPoints.push_back( Point(rect.x + rect.width/10, rect.y + rect.height - rect.height/10) );
     
-    bool foundColorMatch = false;
-    for(int i = 0; i < testPoints.size(); i++) {
-        //drawPoint(img, &testPoints[i], &RED);
-        if (matchColor->testPixel(&hsvImg, testPoints[i].x, testPoints[i].y)) {
-            foundColorMatch = true;
-            break;
-        }
-    }
-    
-    if (!foundColorMatch) {
+    bool foundColorMatch = matchColor->testPoints(&hsvImg, &testPoints);    
+    //if (!foundColorMatch)
         //cout << "Rejecting shape based on color: " << "" << endl;
-        return false;
-    }
     
-    return true;
+    return foundColorMatch;
 }
 

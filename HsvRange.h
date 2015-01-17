@@ -5,6 +5,7 @@
 #include "opencv2/imgproc/imgproc.hpp"
 
 using namespace cv;
+using namespace std;
 
 class HsvRange
 {
@@ -14,6 +15,7 @@ class HsvRange
         
         HsvRange(Scalar hsvMin, Scalar hsvMax);
         bool testPixel(Mat *hsvImg, int x, int y);
+        bool testPoints(Mat *hsvImg, vector<Point> *testPoints);
 };
 
 #endif
