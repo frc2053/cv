@@ -74,18 +74,43 @@ bool YellowToteMatcher::isMatch(Contour *contour, Mat *img)
     // Aspect ratio check
     Rect rect = boundingRect(Mat(*contour));
     float whRatio = (float)rect.width / rect.height;
-    float whRatioMin =  2.0 * 0.9;
-    float whRatioMax =  2.0 * 1.1;
-    if (whRatio < whRatioMin ||  whRatio > whRatioMax)
+    float whRatioMin =  1.4;
+    float whRatioMax =  2.2;
+    
+    if (whRatio < whRatioMin ||  whRatio > whRatioMax) {
+        cout << "Rejecting shape based on aspect-ratio: " << whRatio << endl;
         return false;
+    }
     
     // Color check - Ensure a portion of the tote is the desired match color
     Mat hsvImg;
     cvtColor(*img, hsvImg, CV_BGR2HSV);
     
-    int testX = rect.x + rect.width/20;
-    int testY = rect.y + rect.width/20;
+    vector<Point> testPoints(4);
+    testPoints.push_back( Point(rect.x + rect.width/20, rect.y + rect.height/20) );
+    testPoints.push_back( Point(rect.x + rect.width - rect.width/20, rect.y + rect.height/20) );
+    testPoints.push_back( Point(rect.x + rect.width - rect.width/20, rect.y + rect.height - rect.height/20) );
+    testPoints.push_back( Point(rect.x + rect.width/20, rect.y + rect.height - rect.height/20) );
+    testPoints.push_back( Point(rect.x + rect.width/10, rect.y + rect.height/10) );
+    testPoints.push_back( Point(rect.x + rect.width - rect.width/10, rect.y + rect.height/10) );
+    testPoints.push_back( Point(rect.x + rect.width - rect.width/10, rect.y + rect.height - rect.height/10) );
+    testPoints.push_back( Point(rect.x + rect.width/10, rect.y + rect.height - rect.height/10) );
     
-    return matchColor->testPixel(&hsvImg, testX, testY);    
+    bool foundColorMatch = false;
+    for(int i = 0; i < testPoints.size(); i++) {
+        drawPoint(img, &testPoints[i], &RED);
+        if (matchColor->testPixel(&hsvImg, testPoints[i].x, testPoints[i].y)) {
+            cout << "!";
+            foundColorMatch = true;
+            break;
+        }
+    }
+    
+    if (!foundColorMatch) {
+        cout << "Rejecting shape based on color: " << "" << endl;
+        return false;
+    }
+    
+    return true;
 }
 
