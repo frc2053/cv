@@ -17,8 +17,9 @@ int main( int argc, char** argv )
     YellowToteFinder ytf = YellowToteFinder();
     bool isMatch = ytf.findTote(&src);
     
-    if (isMatch)
-        drawContour(&ytf.matchingContour, &src);
+    if (ytf.foundTote) drawContour(&ytf.contourTote, &src);
+    if (ytf.foundL) drawContour(&ytf.contourL, &src);
+    if (ytf.foundBL) drawContour(&ytf.contourBL, &src);
 
     imshow( "Src", src );    
     waitKey(0);

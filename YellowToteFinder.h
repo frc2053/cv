@@ -6,10 +6,15 @@ class YellowToteFinder
 {       
 private:
     YellowToteMatcher ytm = YellowToteMatcher(&HSV_YELLOW);
-
+    BackwardsLMatcher blm = BackwardsLMatcher(NULL);
+    LMatcher lm = LMatcher(NULL);
+    
+    void checkNesting();
+    
 public:
-    Contour matchingContour;
-    Rect matchingBoundRect;
+    bool foundTote, foundL, foundBL, isProperlyNested;
+    Contour contourTote, contourL, contourBL;
+    Rect rectTote, rectL, rectBL;
     
     YellowToteFinder();
     bool findTote(Mat* img);    

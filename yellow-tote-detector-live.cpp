@@ -34,7 +34,7 @@ int main( int argc, char** argv )
         frame.copyTo(frame, maskImg);
         
         if(isMatch) {
-            drawContour(&ytf.matchingContour, &frame);
+            drawContour(&ytf.contourTote, &frame);
         }        
         
         imshow("Masked", maskImg);

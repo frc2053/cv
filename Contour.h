@@ -28,3 +28,4 @@ vector<Contour> detectContours_YellowFilter(Mat *img, int minPoints, int minLeng
 /***** Misc *****/
 
 Point contourCentoid(Contour* contour);
+bool contourNested(Contour *parent, Contour *child);

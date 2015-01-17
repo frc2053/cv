@@ -204,6 +204,11 @@ Point contourCentoid(Contour* contour)
     int cx = m.m10/m.m00;
     int cy = m.m01/m.m00;
     return Point(cx, cy);
-    
+}
 
+bool contourNested(Contour *parent, Contour *child)
+{
+    Point childCentoid = contourCentoid(child);
+    int rc = pointPolygonTest(*parent, childCentoid, false);   
+    return (rc >= 0);
 }
