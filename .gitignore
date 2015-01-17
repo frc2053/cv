@@ -1,0 +1,9 @@
+pics
+*.o
+edge-detect-contour-explorer
+polygon-explorer-yellow
+tape-detector
+tape-detector-live
+vidcap
+yellow-tote-detector
+
