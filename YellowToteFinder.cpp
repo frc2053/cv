@@ -19,6 +19,11 @@ bool YellowToteFinder::findTote(Mat* img)
     
     // Check for proper nesting
     checkNesting();
+    
+    // If we have an L but no tote, infer size/location of tote.
+    //if (!foundTote && (foundL || foundBL))
+    //    inferToteLocation();
+    
     cout << "Found (" << foundTote << "," << foundBL << "," << foundL << ")" << endl;
     cout << "Properly Nested? " << isProperlyNested << endl;
     
@@ -59,6 +64,13 @@ void YellowToteFinder::checkNesting()
     
     // We found a tote. Any L's we found should be nested in the tote
     else {
+        
+        // If we found both L's but neither are nested in tote, assume the tote is erroneous
+        if (foundL && foundBL && !contourNested(&contourTote, &contourL) && !contourNested(&contourTote, &contourBL)) {
+            foundTote = false;
+            isProperlyNested = true;
+            return;
+        }
         
         // L is not in the tote. Ignore it.
         if (foundL && !contourNested(&contourTote, &contourL))
