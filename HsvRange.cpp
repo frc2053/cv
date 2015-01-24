@@ -17,13 +17,15 @@ bool HsvRange::testPixel(Mat *hsvImg, int x, int y)
     return true;
 }
 
-bool HsvRange::testPoints(Mat *hsvImg, vector<Point> *testPoints)
+int HsvRange::testPoints(Mat *hsvImg, vector<Point> *testPoints)
 {
+    int matchesFound = 0;
+    
     for(int i = 0; i < testPoints->size(); i++) {
         //drawPoint(img, &testPoints[i], &RED);
         if (testPixel(hsvImg, (*testPoints)[i].x, (*testPoints)[i].y)) {
-            return true;
+            matchesFound++;
         }
     }
-    return false;
+    return matchesFound;
 }
