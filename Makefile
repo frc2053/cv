@@ -5,7 +5,8 @@
 
 DEBUG = 1       # Comment out to compile optimized without debug symbols
 
-CFLAGS = `pkg-config --cflags --libs opencv`  -std=c++11
+CFLAGS = `pkg-config --cflags opencv`  -std=c++11
+LINKFLAGS = `pkg-config --libs opencv`
 
 MYLIBS = utils.o HsvRange.o Contour.o InclusionTester.o ShapeMatcher.o YellowToteFinder.o
 MYPROGS = vidcap edge-detect-contour-explorer tape-detector tape-detector-live polygon-explorer-yellow yellow-tote-detector yellow-tote-detector-live yellow-mask-viewer
@@ -45,26 +46,26 @@ YellowToteFinder.o: YellowToteFinder.cpp YellowToteFinder.h ShapeMatcher.cpp Sha
 ##### Programs #####
 
 vidcap: vidcap.cpp
-	g++ $< -o $@ $(CFLAGS)
+	g++ $< -o $@ $(CFLAGS) $(LINKFLAGS)
 
 edge-detect-contour-explorer: edge-detect-contour-explorer.cpp $(MYLIBS)
-	g++ $< $(MYLIBS) -o $@ $(CFLAGS)
+	g++ $< $(MYLIBS) -o $@ $(CFLAGS) $(LINKFLAGS)
 
 tape-detector: tape-detector.cpp $(MYLIBS)
-	g++ $< $(MYLIBS) -o $@ $(CFLAGS)
+	g++ $< $(MYLIBS) -o $@ $(CFLAGS) $(LINKFLAGS)
 
 tape-detector-live: tape-detector-live.cpp $(MYLIBS)
-	g++ $< $(MYLIBS) -o $@ $(CFLAGS)
+	g++ $< $(MYLIBS) -o $@ $(CFLAGS) $(LINKFLAGS)
 
 yellow-tote-detector: yellow-tote-detector.cpp $(MYLIBS)
-	g++ $< $(MYLIBS) -o $@ $(CFLAGS)
+	g++ $< $(MYLIBS) -o $@ $(CFLAGS) $(LINKFLAGS)
 
 yellow-tote-detector-live: yellow-tote-detector-live.cpp $(MYLIBS)
-	g++ $< $(MYLIBS) -o $@ $(CFLAGS)
+	g++ $< $(MYLIBS) -o $@ $(CFLAGS) $(LINKFLAGS)
 
 polygon-explorer-yellow: polygon-explorer-yellow.cpp $(MYLIBS)
-	g++ $< -o $@ $(MYLIBS) $(CFLAGS)
+	g++ $< -o $@ $(MYLIBS) $(CFLAGS) $(LINKFLAGS)
 
 yellow-mask-viewer: yellow-mask-viewer.cpp $(MYLIBS)
-	g++ $< -o $@ $(MYLIBS) $(CFLAGS)
+	g++ $< -o $@ $(MYLIBS) $(CFLAGS) $(LINKFLAGS)
 
