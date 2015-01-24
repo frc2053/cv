@@ -10,7 +10,7 @@ YellowToteFinder::YellowToteFinder()
 
 bool YellowToteFinder::findTote(Mat* img)
 {   
-    vector<Contour> contours = detectContours_YellowFilter(img, 6, 25);
+    vector<Contour> contours = detectContoursColorFiltered(img, &HSV_YELLOW, 6, 25);
     
     // Find Shapes
     foundTote = ytm.findMatch(&contours, img, &contourTote, &rectTote);

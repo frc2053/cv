@@ -16,7 +16,7 @@ int main( int argc, char** argv )
     src = imread( argv[1], 1 );
     drawing = Mat::zeros(src.size(), CV_8UC3);
     bool isMatch, isMatch2;
-    vector<Contour> contours = detectContours_YellowFilter(&src, 6, 50);
+    vector<Contour> contours = detectContoursColorFiltered(&src, &HSV_YELLOW,6, 25);
     BackwardsLMatcher blm(NULL);
     LMatcher lm(NULL);
     

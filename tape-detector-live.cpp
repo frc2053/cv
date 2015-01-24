@@ -6,6 +6,8 @@
 #include <unistd.h>
 
 #include "ShapeMatcher.h"
+#include "utils.h"
+#include "Contour.h"
 
 using namespace cv;
 using namespace std;
@@ -26,7 +28,7 @@ int main( int argc, char** argv )
     {        
         cap >> frame; // get a new frame from camera
             
-        vector<Contour> contours = detectContours_YellowFilter(&frame, 6, 50);
+        vector<Contour> contours = detectContoursColorFiltered(&frame, &HSV_YELLOW,6, 25);
         Contour matchingContour;
         Rect matchingBoundRect;
         
