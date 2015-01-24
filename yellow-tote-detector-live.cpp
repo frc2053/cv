@@ -34,6 +34,7 @@ int main( int argc, char** argv )
         frame.copyTo(frame, maskImg);
         
         if(isMatch) {
+            cout << "Distance From Tote: " << ytf.getDistanceToTote() << "    Dist OFFSET = " << ytf.getOffsetDistance(&frame) << endl;
             drawContour(&ytf.contourTote, &frame);
         }        
         

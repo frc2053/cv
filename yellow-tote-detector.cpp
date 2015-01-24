@@ -17,9 +17,12 @@ int main( int argc, char** argv )
     YellowToteFinder ytf = YellowToteFinder();
     bool isMatch = ytf.findTote(&src);
     
-    if (ytf.foundTote) drawContour(&ytf.contourTote, &src);
-    if (ytf.foundL) drawContour(&ytf.contourL, &src);
-    if (ytf.foundBL) drawContour(&ytf.contourBL, &src);
+    if (ytf.foundTote) {
+        drawContour(&ytf.contourTote, &src);
+        cout << "Distance From Tote: " << ytf.getDistanceToTote() << "    Dist OFFSET = " << ytf.getOffsetDistance(&src) << endl;
+    }
+    //if (ytf.foundL) drawContour(&ytf.contourL, &src);
+    //if (ytf.foundBL) drawContour(&ytf.contourBL, &src);
 
     imshow( "Src", src );    
     waitKey(0);

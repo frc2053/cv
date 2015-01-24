@@ -85,3 +85,32 @@ void YellowToteFinder::checkNesting()
         return;
     }  
 }
+
+
+float YellowToteFinder::getDistanceToTote()
+{
+    // Actual dimensions: Long-side: 26.75, shoer-side: 16.75
+    // THinkpad camera: 37.5 inches form tote: Long side width is 286 pixels
+    // magic-constant = 37.5 * 286 = 10725
+    //
+    //
+    
+    float dist = 10725.0 / rectTote.width;
+    //cout << "rect.width = " << rectTote.width << endl;
+    return dist;
+}
+
+float YellowToteFinder::getOffsetDistance(Mat* img)
+{
+    float toteCenterX = rectTote.x + rectTote.width/2;
+    float frameCenter = img->cols/2;
+    float toteDeltaPix = frameCenter - toteCenterX;
+
+    Point p = Point(toteCenterX, 100);
+    Point p2 = Point(frameCenter, 100);
+    drawPoint(img, &p, &BLUE);
+    drawPoint(img, &p2, &RED);
+
+    //float dist = 10725.0 / toteDeltaPix;
+    return toteDeltaPix;
+}

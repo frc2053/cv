@@ -17,5 +17,7 @@ public:
     Rect rectTote, rectL, rectBL;
     
     YellowToteFinder();
-    bool findTote(Mat* img);    
+    bool findTote(Mat* img);
+    float getDistanceToTote();
+    float getOffsetDistance(Mat* img);
 };
