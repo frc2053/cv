@@ -28,7 +28,7 @@ int main( int argc, char** argv )
     
     // **** Yellow Filter **** //
     
-    contours = detectContours_YellowFilter(&srcImg, 6, 50);
+    contours = detectContoursColorFiltered(&srcImg, &HSV_YELLOW,6, 25);
     
     // Draw contours
     contourImg = Mat::zeros(srcImg.size(), CV_8UC3);
