@@ -15,6 +15,7 @@ extern RNG rng;
 extern Scalar GREEN;
 extern Scalar RED;
 extern Scalar BLUE;
+extern Scalar YELLOW;
 
 extern HsvRange HSV_YELLOW;
 
