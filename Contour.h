@@ -1,6 +1,8 @@
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
 
+#include "HsvRange.h"
+
 using namespace cv;
 	
 typedef typename std::vector<cv::Point> Contour;
@@ -23,7 +25,7 @@ void contourInclusionTest(Contour *contour, Mat *img);
 
 /***** Contour Detection *****/
 
-vector<Contour> detectContours_YellowFilter(Mat *img, int minPoints, int minLength);
+vector<Contour> detectContoursColorFiltered(Mat *img, HsvRange *hrange, int minPoints, int minLength);
 
 /***** Misc *****/
 

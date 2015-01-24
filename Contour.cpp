@@ -162,17 +162,12 @@ void contourInclusionTest(Contour *contour, Mat *img)
  
 }
 
-vector<Contour> detectContours_YellowFilter(Mat *img, int minPoints, int minLength)
+vector<Contour> detectContoursColorFiltered(Mat *img, HsvRange *hrange, int minPoints, int minLength)
 {
     vector<Contour> contours, contoursApprox;
     Mat hsvImg, maskImg; 
     
     cvtColor(*img, hsvImg, CV_BGR2HSV);
-    
-    
-    //Scalar hsvMin = Scalar(20, 100, 100);
-    //Scalar hsvMax = Scalar(30, 255, 255);
-    //HsvRange yellow(hsvMin, hsvMax);
     
     inRange(hsvImg, HSV_YELLOW.hsvMin, HSV_YELLOW.hsvMax, maskImg);
     findContours(maskImg, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
