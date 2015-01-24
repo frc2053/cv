@@ -7,26 +7,26 @@ InclusionTester::InclusionTester(int numPoints, vector<bool> expectedAnswers)
     this->expectedAnswers = expectedAnswers;
 }
 
-bool InclusionTester::test(Contour *contour)
+int InclusionTester::test(Contour *contour)
 {
     return test(contour, NULL);
 }
 
-bool InclusionTester::test(Contour *contour, Mat *img)
+int InclusionTester::test(Contour *contour, Mat *img)
 {
-    bool ans;
+    int matches;
     Rect boundRect = boundingRect(Mat(*contour));
     
     this->testPoints = new vector<Point>;
     
     generateTestPoints(&boundRect);
     if (!img)
-        ans = checkPoints(contour);
+        matches = checkPoints(contour);
     else
-        ans = checkAndDrawPoints(contour, img);
+        matches = checkAndDrawPoints(contour, img);
     
     delete this->testPoints;
-    return ans;
+    return matches;
 }
 
 void InclusionTester::generateTestPoints(Rect *boundRect)
@@ -48,40 +48,40 @@ void InclusionTester::generateTestPoints(Rect *boundRect)
     }
 }
 
-bool InclusionTester::checkPoints(Contour* contour)
+int InclusionTester::checkPoints(Contour* contour)
 {
-    int rc;
+    int rc, matches = 0;
         
     for(int i=0; i < testPoints->size(); i++) {
         rc = pointPolygonTest(*contour, (*testPoints)[i], false);
         
         if (rc < 0 && expectedAnswers[i])
-            return false;
+            continue;
         if (rc >= 0 && !expectedAnswers[i])
-            return false;
+            continue;
+        
+        matches++;
     }
-    return true;
+    return matches;
 }
 
-bool InclusionTester::checkAndDrawPoints(Contour* contour, Mat *img)
+int InclusionTester::checkAndDrawPoints(Contour* contour, Mat *img)
 {
-    bool ans = true;
-    int rc;
+    int rc, matches = 0;
     
     for(int i=0; i < testPoints->size(); i++) {
         rc = pointPolygonTest(*contour, (*testPoints)[i], false);
         
         if (rc < 0 && expectedAnswers[i]) {
             cv::line(*img, (*testPoints)[i], (*testPoints)[i], Scalar(0,0,255), 4);
-            ans = false;
         }
         else if (rc >= 0 && !expectedAnswers[i]) {
             cv::line(*img, (*testPoints)[i], (*testPoints)[i], Scalar(0,0,255), 4);
-            ans = false;
         }
         else {
             cv::line(*img, (*testPoints)[i], (*testPoints)[i], Scalar(0,255,0), 4);
+            matches++;
         }       
     }
-    return ans;
+    return matches;
 }

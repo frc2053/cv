@@ -9,8 +9,8 @@ class InclusionTester
 {
     public:
         InclusionTester(int numPoints, vector<bool> expectedAnswers);
-        bool test(Contour *contour);
-        bool test(Contour *contour, Mat *img);
+        int test(Contour *contour);
+        int test(Contour *contour, Mat *img);
     
     private:
         vector<Point> *testPoints;
@@ -18,6 +18,6 @@ class InclusionTester
         int numPoints;
         
         void generateTestPoints(Rect *boundRect);
-        bool checkPoints(Contour* contour);
-        bool checkAndDrawPoints(Contour* contour, Mat *img);
+        int checkPoints(Contour* contour);
+        int checkAndDrawPoints(Contour* contour, Mat *img);
 };

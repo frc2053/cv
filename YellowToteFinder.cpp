@@ -14,18 +14,19 @@ bool YellowToteFinder::findTote(Mat* img)
     
     // Find Shapes
     foundTote = ytm.findMatch(&contours, img, &contourTote, &rectTote);
-    foundL = lm.findMatch(&contours, img, &contourL, &rectL);
-    foundBL = blm.findMatch(&contours, img, &contourBL, &rectBL);
+    //foundL = lm.findMatch(&contours, img, &contourL, &rectL);
+    //foundBL = blm.findMatch(&contours, img, &contourBL, &rectBL);
     
     // Check for proper nesting
-    checkNesting();
+    //checkNesting();
     
     // If we have an L but no tote, infer size/location of tote.
     //if (!foundTote && (foundL || foundBL))
     //    inferToteLocation();
     
-    cout << "Found (" << foundTote << "," << foundBL << "," << foundL << ")" << endl;
-    cout << "Properly Nested? " << isProperlyNested << endl;
+    cout << "Found (" << foundTote << ")" << endl;
+    //cout << "Found (" << foundTote << "," << foundBL << "," << foundL << ")" << endl;
+    //cout << "Properly Nested? " << isProperlyNested << endl;
     
     // If we're missing the tote, try to infer the tote's position from the L's.
     
