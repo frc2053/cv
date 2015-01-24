@@ -94,10 +94,28 @@ bool YellowToteMatcher::isMatch(Contour *contour, Mat *img)
     testPoints.push_back( Point(rect.x + rect.width - rect.width/10, rect.y + rect.height - rect.height/10) );
     testPoints.push_back( Point(rect.x + rect.width/10, rect.y + rect.height - rect.height/10) );
     
-    bool foundColorMatch = matchColor->testPoints(&hsvImg, &testPoints);    
-    //if (!foundColorMatch)
-        //cout << "Rejecting shape based on color: " << "" << endl;
+    int matchFound = matchColor->testPoints(&hsvImg, &testPoints);    
+    if (matchFound < 1) return false;
     
-    return foundColorMatch;
+    // Area check
+    //double minArea = (rect.width * rect.height) * 0.55;
+    //double area = contourArea(*contour, false);
+    //cout << " Area is " << area << "   minArea=" << minArea << endl;
+    //if (area < minArea) {
+    //    cout << "AREA FAIL!\n";
+    //    return false;
+   // }
+   
+   // Perimiter check
+   double rectP = (rect.width * 2) + (rect.height * 2); 
+   double minP =  rectP * 0.75;
+   double maxP =  rectP * 1.40;
+   double p = arcLength(*contour,true);
+   
+   cout << "perim is: " << p << "    " << "minP=" << minP << "    maxP=" << maxP << endl;
+   if (p > maxP) cout << "   FAILED max check!" << endl;
+   if (p < minP) cout << "   FAILED min check!" << endl;
+    
+   return true;
 }
 
