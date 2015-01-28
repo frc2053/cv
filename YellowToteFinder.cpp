@@ -91,12 +91,12 @@ float YellowToteFinder::getDistanceToTote()
 {
     // Actual dimensions: Long-side: 26.75, shoer-side: 16.75
     // THinkpad camera: 37.5 inches form tote: Long side width is 286 pixels
-    // magic-constant = 37.5 * 286 = 10725
+    // magic-constant = 35 * 400 = 14000
     //
     //
     
-    float dist = 10725.0 / rectTote.width;
-    //cout << "rect.width = " << rectTote.width << endl;
+    float dist = 14000.0 / rectTote.width;
+    cout << "rect.width = " << rectTote.width << endl;
     return dist;
 }
 
